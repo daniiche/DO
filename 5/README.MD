@@ -84,5 +84,6 @@ at      executes commands at a specified time.
 
 batch   executes commands when system load levels permit; in other words,  when  the  load
                average drops below 1.5, or the value specified in the invocation of atd.
+
 14)
 vagrant halt
