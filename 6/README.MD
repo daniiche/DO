@@ -32,6 +32,21 @@ sudo ls . 2> /dev/pts/0
 Получится через пайп
 echo 'foo bar' | grep foo > test.txt
 
+UPD
+если считать pipe не перенаправлением, а другим каналом
+то можно либо через перенаправления - читаем файл командой и передаем в другой файл
+danobook:vargant-ubuntu-test danche$ echo 'foo bar bar' > test.txt
+danobook:vargant-ubuntu-test danche$ cat test.txt > test2.txt
+danobook:vargant-ubuntu-test danche$ ls
+Vagrantfile	test.txt	test2.txt
+danobook:vargant-ubuntu-test danche$ cat test.txt
+foo bar bar
+danobook:vargant-ubuntu-test danche$ cat test2.txt
+foo bar bar
+
+тут опционально можно было передать < на входе в cat файла test.txt, но он уже подразумевается при передаче в качестве аргумента
+
+
 6
 Получится ли находясь в графическом режиме, вывести данные из PTY в какой-либо из эмуляторов TTY? 
 Сможете ли вы наблюдать выводимые данные?
@@ -53,6 +68,7 @@ lrwx------ 1 vagrant vagrant 64 Nov 14 18:36 /proc/1283/fd/5 -> /dev/pts/0
 
 8
 Получится ли в качестве входного потока для pipe использовать только stderr команды, не потеряв при этом отображение stdout на pty?
+
 vagrant@vagrant:~$ ls nofile 2>&1 >/proc/$$/fd/5 | cat>out.txt
 vagrant@vagrant:~$ cat out.txt
 ls: cannot access 'nofile': No such file or directory
