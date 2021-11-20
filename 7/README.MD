@@ -19,6 +19,17 @@ openat(AT_FDCWD, "/usr/share/misc/magic.mgc", O_RDONLY) = 3
 3
 можно взять вывод команды по дескриптору и перенаправить в dev/null, тогда он будет удалятьсяб а не занимать место
 
+Upd 
+
+touch log.txt
+exec 6> log.txt
+logcommand 2>&6
+exec 6> /dev/null
+
+Or
+
+command > /dev/null 2>&1
+
 
 4
 All the memory and resources allocated to a process are deallocated when the process terminates using the exit() system call. But the process’s entry in the process table is still available. This process is now a zombie process.
