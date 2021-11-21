@@ -33,6 +33,28 @@ Or
 
 command > /dev/null 2>&1
 
+upd2
+
+какое имя будет иметь удаленный файл;
+-имя не изменится
+
+как вы перенаправите ввод уже работающего сервиса?
+Покажите работающий пример, который можно запустить и проверить.
+Например, для утилиты ping
+
+exec 6> log.txt
+ping 8.8.8.8 >&6
+
+в другой сессии
+lsof |grep log
+bash      2736                        vagrant    6w      REG              253,0     9753     131092 /home/vagrant/log.txt
+rm log.txt
+
+lsof |grep log
+bash      2736                        vagrant    6w      REG              253,0     1411     131093 /home/vagrant/log.txt (deleted)
+
+exec 6> /dev/null
+
 
 4
 All the memory and resources allocated to a process are deallocated when the process terminates using the exit() system call. But the process’s entry in the process table is still available. This process is now a zombie process.
