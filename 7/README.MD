@@ -22,8 +22,11 @@ openat(AT_FDCWD, "/usr/share/misc/magic.mgc", O_RDONLY) = 3
 Upd 
 
 touch log.txt
+
 exec 6> log.txt
+
 logcommand 2>&6
+
 exec 6> /dev/null
 
 Or
