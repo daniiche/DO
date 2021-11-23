@@ -55,6 +55,29 @@ bash      2736                        vagrant    6w      REG              253,0 
 
 exec 6> /dev/null
 
+upd3
+
+ping 127.0.0.1 > test &
+[1] 33910
+vagrant@vagrant:~$ rm test
+vagrant@vagrant:~$ sudo ps aux | grep ping
+vagrant    33776  0.0  0.0   9692   936 ?        S    11:31   0:00 ping 127.0.0.1
+vagrant    33850  0.0  0.0   9692   872 ?        S    11:45   0:00 ping 127.0.0.1
+vagrant    33910  0.0  0.0   9692   936 pts/3    S    11:46   0:00 ping 127.0.0.1
+vagrant    33920  0.0  0.0   8900   732 pts/3    S+   11:46   0:00 grep --color=auto ping
+vagrant@vagrant:~$ sudo lsof -p 33910 | grep test
+ping    33910 vagrant    1w   REG  253,0     3114 131103 /home/vagrant/test (deleted)
+
+vagrant@vagrant:~$ sudo cat /proc/33910/fd/1
+PING 127.0.0.1 (127.0.0.1) 56(84) bytes of data.
+
+sudo cat /proc/33910/fd/1 > /dev/null
+
+После этого файл перестал расти
+
+vagrant@vagrant:~$ sudo cat /proc/33910/fd/1
+PING 127.0.0.1 (127.0.0.1) 56(84) bytes of data.
+
 
 4
 All the memory and resources allocated to a process are deallocated when the process terminates using the exit() system call. But the process’s entry in the process table is still available. This process is now a zombie process.
