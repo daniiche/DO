@@ -1,3 +1,4 @@
+```
 1 Узнайте о sparse (разряженных) файлах.
 vagrant@vagrant:~$ cp --sparse=always ./file ./sparse-file
 
