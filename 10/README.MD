@@ -1,9 +1,11 @@
 1
+
 HTTP/1.1 301 Moved Permanently
 Постоянный редирект на другой адрес
 
 
 2
+
 Status Code: 307 Internal Redirect
 
 Request URL: https://stackoverflow.com/
@@ -14,17 +16,20 @@ Status Code: 200
 ![Alt text](/DO/10/1.jpg?raw=true "Optional Title")
 
 3
+
 public
 vagrant@vagrant:~$ curl ifconfig.me
 109.252.100.75
 
 4
+
 whois 109.252.100.75
 % This is the RIPE Database query service.
 netname:        MGTS-PPPOE
 descr:          Moscow Local Telephone Network (OAO MGTS)
 
 5
+
 vagrant@vagrant:~$ traceroute 8.8.8.8
 traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets
 
@@ -46,6 +51,7 @@ AS8359
 AS15169
 
 6
+
 vagrant@vagrant:~$ mtr -zn 8.8.8.8
 
 AS15169  8.8.8.8                                                              80.0%
@@ -53,6 +59,7 @@ AS15169  8.8.8.8                                                              80
 ping avg 46ms
 
 7
+
 dns.google.		10800	IN	NS	ns4.zdns.google.
 dns.google.		10800	IN	NS	ns3.zdns.google.
 dns.google.		10800	IN	NS	ns2.zdns.google.
@@ -62,10 +69,9 @@ dns.google.		900	IN	A	8.8.4.4
 dns.google.		900	IN	A	8.8.8.8
 
 8
+
 vagrant@vagrant:~$ dig -x 8.8.8.8
 
 ;; ANSWER SECTION:
 8.8.8.8.in-addr.arpa.	5998	IN	PTR	dns.google.
 
-
-10
