@@ -13,7 +13,7 @@ Request Method: GET
 Status Code: 200 
 589ms
 
-![Alt text](/DO/10/1.jpg?raw=true "Optional Title")
+![Alt text](/10/1.jpg?raw=true "Optional Title")
 
 3
 
