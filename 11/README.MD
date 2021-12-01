@@ -1,3 +1,4 @@
+```
 1
 vagrant@vagrant:~$ ip -c -br link
 lo               UNKNOWN        00:00:00:00:00:00 <LOOPBACK,UP,LOWER_UP>
