@@ -1,4 +1,4 @@
-'''
+```
 1
 route-views>show ip route 109.252.100.75
 Routing entry for 109.252.0.0/16
@@ -93,4 +93,5 @@ UNCONN                 0                       0                                
 аудио связь, видео стримминг
 
 5
-![Alt text](/12/1.jpg?raw=true "Optional Title")
+```
+![Alt text](https://raw.githubusercontent.com/daniiche/DO/main/12/1.JPG)
