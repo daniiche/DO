@@ -55,11 +55,18 @@ Done testing now all IP addresses (on port 443): 146.158.54.24 146.158.48.24 146
 
 5
 ssh-keygen
+Generating public/private rsa key pair.
 
+
+sudo echo /root/.ssh/id_rsa >> ~/.ssh/authorized_keys
+ssh root@localhost:2222
+ssh -i ~/.ssh/mykey.key root@localhost:2222
 
 6
+cp ~/.ssh/mykey.key ~/.ssh/mykey2.key
 
-
+mkdir -p ~/.ssh && chmod 700 ~/.sshtouch ~/.ssh/config && chmod 600 ~/.ssh/config
+#---------------------------общая структура файла ~/.ssh/configHost hostname1    SSH_OPTION valueHost *    SSH_OPTION value#---------------------------Пример конфигаHost my_server  HostName localhost  IdentityFile ~/.ssh/mykey2.key  User root  Port 2222  #StrictHostKeyChecking noHost *    User default_username    IdentityFile ~/.ssh/id_rsa
 
 
 7
