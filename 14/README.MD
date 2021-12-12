@@ -151,3 +151,21 @@ ERROR Sun 12 Dec 2021 14:18:15 MSK -- 192.168.0.1
 что сообщение в коммите содержит код текущего задания в квадратных скобках и количество символов в сообщении не превышает 30. 
 Пример сообщения: [04-script-01-bash] сломал хук.
 
+
+```bash
+#!/usr/bin/env bash
+
+
+#MSG="[04-script-01-bash] added some shit"
+MSG=$1
+LEN=30
+CODE="[04-script-01-bash]"
+
+if [[ $(echo -n $MSG|wc -m) -gt $LEN ]]
+	then
+		exit 2
+	elif [[ $MSG != *[04-script-01-bash]* ]]
+	then
+		exit 2
+fi
+echo its fine!
