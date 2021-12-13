@@ -178,7 +178,7 @@ path "pki*" {
 
 
 
-to default
+added to default
 
 vagrant@vagrant:/etc/vault$ vault secrets enable pki
 2021-12-13T17:05:09.022Z [INFO]  core: successful mount: namespace="\"\"" path=pki/ type=pki
@@ -235,13 +235,9 @@ sudo vim root.key
 
 sudo chmod 644 root.crt
 sudo update-ca-certificates
-Updating certificates in /etc/ssl/certs...
-rehash: warning: skipping root.pem,it does not contain exactly one certificate or CRL
-1 added, 0 removed; done.
-Running hooks in /etc/ca-certificates/update.d...
-done.
-
 ```
+
+mac dragg and drop
 
 6 Установите nginx.
 
@@ -284,6 +280,17 @@ Commercial support is available at
 =cd /etc/nginx
 
 vagrant@vagrant:/etc/nginx$ sudo vim nginx.conf
+
+server {
+         listen              443 ssl;
+         server_name         www.example.com;
+         ssl_certificate    /etc/ssl/root.crt;
+         ssl_certificate_key /etc/ssl/root.key;
+         ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+         ssl_ciphers         HIGH:!aNULL:!MD5;
+       }
+ 
+ sudo nginx -s reload
 
 ```
 
