@@ -289,9 +289,9 @@ vagrant@vagrant:/etc/nginx$ sudo vim nginx.conf
 
 8 Откройте в браузере на хосте https адрес страницы, которую обслуживает сервер nginx.
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![alt text](https://github.com/daniiche/DO/blob/main/1diploma/1.JPG)
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![alt text](https://github.com/daniiche/DO/blob/main/1diploma/2.JPG)
 
 9 Создайте скрипт, который будет генерировать новый сертификат в vault:
 генерируем новый сертификат так, чтобы не переписывать конфиг nginx;
