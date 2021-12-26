@@ -20,8 +20,8 @@ c = a + b
 | Вопрос  | Ответ |
 | ------------- | ------------- |
 | Какое значение будет присвоено переменной `c`?  | unsupported operand type(s) for +: 'int' and 'str'  |
-| Как получить для переменной `c` значение 12?  | a = '1'  |
-| Как получить для переменной `c` значение 3?  | b = 2  |
+| Как получить для переменной `c` значение 12?  | c=str(a)+b  |
+| Как получить для переменной `c` значение 3?  | c=int(b)+a  |
 
 ## Обязательная задача 2
 Мы устроились на работу в компанию, где раньше уже был DevOps Engineer. Он написал скрипт, позволяющий узнать, какие файлы модифицированы в репозитории, относительно локальных изменений. Этим скриптом недовольно начальство, потому что в его выводе есть не все изменённые файлы, а также непонятен полный путь к директории, где они находятся. Как можно доработать скрипт ниже, чтобы он исполнял требования вашего руководителя?
@@ -97,12 +97,50 @@ for result in result_os.split('\n'):
 
 ### Ваш скрипт:
 ```python
-???
+# !/usr/bin/env python
+import socket
+import os
+import json
+
+filepath = os.path.join('.', 'ips.json')
+
+def checkIp(ip_dict):
+    ip_dict = ip_dict
+    for ip in ip_dict:
+        try:
+            ip_dict[ip] = socket.gethostbyname(ip)
+        except BrokenPipeError as e:
+            print('e')
+    return ip_dict
+
+def openFile():
+    try:
+        with open(file=filepath, mode='r') as json_file:
+            return json.load(fp=json_file)
+    except FileNotFoundError as e:
+        return {
+            'drive.google.com': None
+            ,'mail.google.com':None
+            ,'google.com':None
+        }
+
+def updateFile(ip_dict):
+    with open(file=filepath, mode='w') as json_file:
+        json.dump(obj=ip_dict, fp=json_file)
+
+if __name__ == '__main__':
+    ip_dict = openFile()
+
+    ip_dict = checkIp(ip_dict)
+
+    updateFile(ip_dict)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
-```
-???
+```console
+/Users/danche/PycharmProjects/netology.devops/venv/bin/python /Users/danche/PycharmProjects/netology.devops/Homeworks/15/api_check.py
+
+Process finished with exit code 0
 ```
 
 ## Дополнительное задание (со звездочкой*) - необязательно к выполнению
@@ -116,5 +154,5 @@ for result in result_os.split('\n'):
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+
 ```
