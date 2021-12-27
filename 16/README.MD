@@ -41,7 +41,7 @@
 
 Ваш скрипт:
 
-'''python
+```python
 # !/usr/bin/env python
 import socket
 import os
@@ -91,25 +91,24 @@ if __name__ == '__main__':
 
     ip_dict = checkIp(ip_dict)
     updateFile(ip_dict)
-
-'''
+```
 Вывод скрипта при запуске при тестировании:
 
-'''
+```
 Process finished with exit code 0
-'''
+```
 json-файл(ы), который(е) записал ваш скрипт:
 
-'''
+```
 {"drive.google.com": "173.194.73.194", "mail.google.com": "173.194.73.18", "google.com": "64.233.161.100"}
-'''
+```
 yml-файл(ы), который(е) записал ваш скрипт:
 
-'''
+```
 drive.google.com: 173.194.73.194
 google.com: 64.233.161.100
 mail.google.com: 173.194.73.18
-'''
+```
 
 #Дополнительное задание (со звездочкой*) - необязательно к выполнению
 
