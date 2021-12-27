@@ -1,7 +1,7 @@
 
-#Домашнее задание к занятию "4.3. Языки разметки JSON и YAML"
+# Домашнее задание к занятию "4.3. Языки разметки JSON и YAML"
 
-#Обязательная задача 1
+# Обязательная задача 1
 
 Мы выгрузили JSON, который получили через API запрос к нашему сервису:
 ```
@@ -35,7 +35,7 @@
     }
 ```
 
-#Обязательная задача 2
+# Обязательная задача 2
 
 В прошлый рабочий день мы создавали скрипт, позволяющий опрашивать веб-сервисы и получать их IP. К уже реализованному функционалу нам нужно добавить возможность записи JSON и YAML файлов, описывающих наши сервисы. Формат записи JSON по одному сервису: { "имя сервиса" : "его IP"}. Формат записи YAML по одному сервису: - имя сервиса: его IP. Если в момент исполнения скрипта меняется IP у сервиса - он должен так же поменяться в yml и json файле.
 
@@ -110,7 +110,7 @@ google.com: 64.233.161.100
 mail.google.com: 173.194.73.18
 ```
 
-#Дополнительное задание (со звездочкой*) - необязательно к выполнению
+# Дополнительное задание (со звездочкой*) - необязательно к выполнению
 
 Так как команды в нашей компании никак не могут прийти к единому мнению о том, какой формат разметки данных использовать: JSON или YAML, нам нужно реализовать парсер из одного формата в другой. Он должен уметь:
 
@@ -122,7 +122,58 @@ mail.google.com: 173.194.73.18
 Полученный файл должен иметь имя исходного файла, разница в наименовании обеспечивается разницей расширения файлов
 Ваш скрипт:
 
-???
+```python
+import json
+import yaml
+import argparse
+
+def openfile(filepath):
+    imported_file = None
+    filepath_export = None
+    with open(filepath, 'r') as f:
+        if '.json' or '.yaml' in f:
+            file = f.read()
+            if file.startswith('{' or '[{'):
+                try:
+                    imported_file = json.loads(file)
+                except Exception as e:
+                    print(f'Found errors in JSON:\n{e}')
+                filepath_export = filepath[:-4]+'YAML'
+            else:
+                try:
+                    imported_file = yaml.safe_load(file)
+                except Exception as e:
+                    print(f'Found errors in YAML:\n{e}')
+                filepath_export = filepath[:-4]+'JSON'
+        else:
+            print('File is not a YAML or JSON')
+        return imported_file, filepath_export
+
+def savefile(imported_file,filepath_export):
+    with open(filepath_export,'w') as f:
+        if 'JSON' in filepath_export:
+            json.dump(imported_file,f)
+        elif 'YAML' in filepath_export:
+            yaml.safe_dump(imported_file, f)
+        else:
+            print('Error on saving')
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='JSON YAML converter')
+    parser.add_argument('-f', '--file', help='Path to file', required=True)
+    args = vars(parser.parse_args())
+    filepath = args['file']
+    imported_file,filepath_export = openfile(filepath)
+    savefile(imported_file,filepath_export)
+    print(f'Successfully saved at {filepath_export}')
+```
 Пример работы скрипта:
 
 ???
+```console
+(venv) danobook:16 danche$ python format_converter.py -f 'ips.yaml' 
+Successfully saved at ips.JSON
+
+(venv) danobook:16 danche$ python format_converter.py -f 'ips.json' 
+Successfully saved at ips.YAML
+```
