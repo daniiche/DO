@@ -101,23 +101,37 @@ for result in result_os.split('\n'):
 import socket
 import os
 import json
+import yaml
 
-filepath = os.path.join('.', 'ips.json')
+filename = 'ips.'
 
 def checkIp(ip_dict):
-    ip_dict = ip_dict
-    for ip in ip_dict:
+    ip_dict_old = ip_dict
+    ip_dict_new = {}
+    for url in ip_dict:
+        print(url)
         try:
-            ip_dict[ip] = socket.gethostbyname(ip)
+            ip_dict_new[url] = socket.gethostbyname(url)
+            if ip_dict_old[url] != ip_dict_new[url]:
+                print(f'[ERROR] <{url}> IP mismatch: <{ip_dict_old[url]}> <{ip_dict_new[url]}>')
         except BrokenPipeError as e:
             print('e')
-    return ip_dict
+    return ip_dict_new
 
 def openFile():
     try:
-        with open(file=filepath, mode='r') as json_file:
-            return json.load(fp=json_file)
-    except FileNotFoundError as e:
+        with open(file=os.path.join('.', f'{filename}json'), mode='r') as file:
+            return json.load(file)
+    except:
+        return {
+            'drive.google.com': None
+            ,'mail.google.com':None
+            ,'google.com':None
+        }
+    try:
+        with open(file=os.path.join('.', f'{filename}yaml'), mode='r') as file:
+            return yaml.safe_load(file)
+    except:
         return {
             'drive.google.com': None
             ,'mail.google.com':None
@@ -125,20 +139,39 @@ def openFile():
         }
 
 def updateFile(ip_dict):
-    with open(file=filepath, mode='w') as json_file:
-        json.dump(obj=ip_dict, fp=json_file)
+    with open(file=os.path.join('.', f'{filename}json'), mode='w') as file:
+        json.dump(ip_dict,file)
+
+    with open(file=os.path.join('.', f'{filename}yaml'), mode='w') as file:
+        yaml.safe_dump(ip_dict,file)
 
 if __name__ == '__main__':
     ip_dict = openFile()
 
     ip_dict = checkIp(ip_dict)
-
     updateFile(ip_dict)
+
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```console
 /Users/danche/PycharmProjects/netology.devops/venv/bin/python /Users/danche/PycharmProjects/netology.devops/Homeworks/15/api_check.py
+drive.google.com
+[ERROR] <drive.google.com> IP mismatch: <74.125.131.194> <64.233.162.194>
+mail.google.com
+[ERROR] <mail.google.com> IP mismatch: <74.125.131.19> <173.194.222.19>
+google.com
+[ERROR] <google.com> IP mismatch: <173.194.73.101> <74.125.131.102>
+
+Process finished with exit code 0
+
+
+next iteration
+
+/Users/danche/PycharmProjects/netology.devops/venv/bin/python /Users/danche/PycharmProjects/netology.devops/Homeworks/15/api_check.py
+drive.google.com
+mail.google.com
+google.com
 
 Process finished with exit code 0
 ```
