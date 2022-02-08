@@ -7,7 +7,7 @@
 Скриншот страницы, как на слайде из презентации (слайд 37).
 
 <p align="center">
-  <img width="1200" height="600" src="./assets/1.jpg">
+  <img height="600" src="./assets/1.jpg">
 </p>
 
 
@@ -20,7 +20,7 @@
 Скриншот страницы свойств созданной ВМ, как на примере ниже:
 
 <p align="center">
-  <img width="1200" height="600" src="./assets/2.jpg">
+  <img  height="600" src="./assets/2.jpg">
 </p>
 
 
@@ -33,7 +33,7 @@
 Скриншот работающего веб-интерфейса Grafana с текущими метриками, как на примере ниже
 
 <p align="center">
-  <img width="1200" height="600" src="./assets/3.jpg">
+  <img height="600" src="./assets/3.jpg">
 </p>
 
 
