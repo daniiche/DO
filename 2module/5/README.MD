@@ -15,7 +15,7 @@
 Если он получил более половины откликов со своим значением параметра, то сам становится лидером.
 Если получил сообщение с параметром, увеличенным на 1 от егозначения - то переходит в режим воркера и подчиняется другому лидеру.
 
--
+-It is used to create a network between several docker hosts that enables to connect workers in each pool seamlessly in a secure way.
 
 
 ## Задача 2
