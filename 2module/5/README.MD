@@ -40,7 +40,7 @@ docker node ls
 docker service ls
 
 <p align="center">
-  <img height="600" src="./assets/1.jpg">
+  <img height="600" src="./assets/2.jpg">
 </p>
 
 
@@ -52,4 +52,9 @@ docker service ls
 docker swarm update --autolock=true
 
 
-Text
+[root@node01 ~]# docker swarm update --autolock=true
+Swarm updated.
+To unlock a swarm manager after it restarts, run the `docker swarm unlock`
+command and provide the following key:
+
+This feature allows us to manually manage keys used to encrypt raft logs. This option makes it reqquired do provide key to decrypt raft logs and to access swarm after docker restart.
