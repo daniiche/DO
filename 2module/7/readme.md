@@ -155,11 +155,11 @@ primary key, btree, for table "public.orders"
 
 ```
 
-```
+```sql
 SELECT * FROM information_schema.table_privileges where table_schema = 'public';
 ```
 
-```
+```console
 test_db=# SELECT distinct grantee FROM information_schema.table_privileges where table_schema='public';
      grantee      
 ------------------
@@ -196,8 +196,31 @@ Ritchie Blackmore	Russia
 запросы
 результаты их выполнения.
 
+```sql
+INSERT INTO orders("наименование","цена") VALUES
+('Шоколад',10),
+('Принтер',3000),
+('Книга',500),
+('Монитор',7000),
+('Гитара',4000);
+
+INSERT INTO clients("фамилия","страна проживания") VALUES
+('Иванов Иван Иванович','USA'),
+('Петров Петр Петрович','Canada'),
+('Иоганн Себастьян Бах','Japan'),
+('Ронни Джеймс Дио','Russia'),
+('Ritchie Blackmore','Russia');
+
+SELECT COUNT(*) FROM orders
+union all
+SELECT COUNT(*) FROM clients;
+
 ```
 
+```
+count
+5
+5
 ```
 
 ## Задача 4
@@ -216,8 +239,26 @@ Ritchie Blackmore	Russia
 
 Подсказк - используйте директиву UPDATE.
 
-```
+```sql
+delete from clients c
+where c.фамилия in ('Ронни Джеймс Дио','Ritchie Blackmore');
 
+update orders
+set наименование='гитара'
+where id = (select заказ from clients where фамилия='Иоганн Себастьян Бах');
+
+update orders
+set наименование='монитор'
+where id = (select заказ from clients where фамилия='Петров Петр Петрович');
+
+update orders
+set наименование='книга'
+where id = (select заказ from clients where фамилия='Иванов Иван Иванович');
+
+select "фамилия" as ФИО,"наименование" as заказ
+from clients
+inner join orders o
+on clients.заказ = o.id;
 ```
 
 ## Задача 5
@@ -227,6 +268,19 @@ Ritchie Blackmore	Russia
 Приведите получившийся результат и объясните что значат полученные значения.
 
 ```
+EXPLAIN ANALYSE SELECT COUNT(*) FROM clients;
+
+Aggregate  (cost=11.62..11.63 rows=1 width=8) (actual time=0.026..0.027 rows=1 loops=1)
+  ->  Seq Scan on clients  (cost=0.00..11.30 rows=130 width=0) (actual time=0.007..0.008 rows=5 loops=1)
+Planning Time: 0.052 ms
+Execution Time: 0.054 ms
+
+Здесь в виде древовидной структуре представленны выполняющиеся операции.
+В корневом уровне есть функция агрегации подсчета, выдающая одну строку и занимающая около 0.025 мс
+Для ее реализации нужно внутри нее проводить последовательный перебор значений, занимающий 0.007 мс.
+Сost - это число условных единиц сложности которые потребуются движку для начала операции.
+Rows - это предположительное число строк, которые будут возвращены
+Width - это примерный размер в байтах возвращенных строк
 
 ```
 
@@ -243,6 +297,14 @@ Ritchie Blackmore	Russia
 
 Приведите список операций, который вы применяли для бэкапа данных и восстановления.
 
-```
+```console
+docker exec -i postgres_docker_postgres_1 /bin/bash -c "POSTGRES_PASSWORD=admin pg_dump --username test-admin-user test_db > /var/lib/postgresql/backups/dump.sql"
+
+docker exec -i postgres_docker_postgres_1 /bin/bash -c "POSTGRES_PASSWORD=admin psql -U test-admin-user -d test_db -c 'drop database test_db'"
+
+docker exec -i postgres_docker_postgres_1 /bin/bash -c "POSTGRES_PASSWORD=admin psql -U test-admin-user -d postgres -c 'create database test_db'"
+
+docker exec -i postgres_docker_postgres_1 /bin/bash -c "POSTGRES_PASSWORD=admin psql --username test-admin-user test_db < /var/lib/postgresql/backups/dump.sql"
 
 ```
+
