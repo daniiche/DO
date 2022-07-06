@@ -9,7 +9,11 @@
 
 Добавил правило, что если происходит изменение в дефолтной ветке (мейн), то запускается один шаг, если по любой другой, то шаг mvn clean test
 
-Сохранил бэкап всех настроек в репозиторий, запушил в мейн - по нему автоматически запустился билд
+Для миграции build configuration зашел в  Project Settings | Versioned Settings | Configuration, включил синхронизацию, добавил 
+Project settings VCS root
+
+
+Запушил в мейн - по нему автоматически запустился билд
 
 Создал ветку. добавил класс и его тест
 ![alt text](https://raw.githubusercontent.com/daniiche/DO/main/3module/93/4.JPG "Logo Title Text 1")
@@ -27,5 +31,6 @@
 
 После запуска артефакты сохранились.
 
-Снова сделал бэкап настроек и запушил в репозиторий.
+Репозиторий.
 https://github.com/daniiche/example-teamcity
+upd( теперь настройки в репу пушит сам Тимсити https://github.com/daniiche/example-teamcity/tree/master/.teamcity/ExampleTeamcity)
