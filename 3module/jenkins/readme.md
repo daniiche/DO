@@ -120,12 +120,74 @@ Build step 'Execute shell' marked build as failure
 Finished: FAILURE
 
 2 Сделать Declarative Pipeline, который будет выкачивать репозиторий с плейбукой и запускать её
+Declarative Pipeline
+
+pipeline {
+    agent any
+    stages {
+        stage('Download code') {
+            steps {
+                git 'https://github.com/daniiche/example-playbook.git'
+            }
+        }
+        stage('Execute ansible') {
+            steps {
+                sh 'ansible-galaxy install -p $WORKSPACE -r requirements.yml'
+                sh 'ansible-playbook ./site.yml -i ./inventory/prod.yml'
+            }
+        }
+    }
+}
+
 
 3 Перенести Declarative Pipeline в репозиторий в файл Jenkinsfile
-4 Перенастроить Job на использование Jenkinsfile из репозитория
-5 Создать Scripted Pipeline, наполнить его скриптом из pipeline
-6 Заменить credentialsId на свой собственный
-7 Проверить работоспособность, исправить ошибки, исправленный Pipeline вложить в репозитрий в файл ScriptedJenkinsfile
-8 Отправить ссылку на репозиторий в ответе
+епренес https://github.com/daniiche/example-playbook/blob/master/Jenkinsfile
 
-## Выполнение
+4 Перенастроить Job на использование Jenkinsfile из репозитория
+тот же пайплайн как в прошлом шаге, только файл берется по ссылке из репозитория
+pipeline from script SCM
+
+5 Создать Scripted Pipeline, наполнить его скриптом из pipeline
+node("ansible_docker"){
+    stage("Git checkout"){
+        git credentialsId: '6d0a82bd-b2e4-4bf8-8a7c-7a4c5cf1291e', url: 'https://github.com/daniiche/example-playbook.git'
+    }
+    stage("Check ssh key"){
+        secret_check=false
+    }
+    stage("Run playbook"){
+        if (secret_check){
+            sh 'ansible-playbook site.yml -i inventory/prod.yml'
+        }
+        else{
+            echo 'no more keys'
+        }
+        
+    }
+}
+
+6 Заменить credentialsId на свой собственный
+
+
+7 Проверить работоспособность, исправить ошибки, исправленный Pipeline вложить в репозитрий в файл ScriptedJenkinsfile
+node("ansible_docker"){
+    stage("Git checkout"){
+        git credentialsId: '6d0a82bd-b2e4-4bf8-8a7c-7a4c5cf1291e', url: 'https://github.com/daniiche/example-playbook.git'
+    }
+    stage("Check ssh key"){
+        secret_check=false
+    }
+    stage("Run playbook"){
+        if (secret_check){
+            sh 'ansible-galaxy install -p $WORKSPACE -r requirements.yml'
+            sh 'ansible-playbook ./site.yml -i ./inventory/prod.yml'
+        }
+        else{
+            echo 'no more keys'
+        }
+        
+    }
+}
+SUCCESS
+8 Отправить ссылку на репозиторий в ответе
+https://github.com/daniiche/example-playbook
