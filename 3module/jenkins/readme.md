@@ -78,13 +78,54 @@ https://github.com/daniiche/example-playbook
 
 ## Основная часть
 
-Сделать Freestyle Job, который будет запускать ansible-playbook из форка репозитория
-Сделать Declarative Pipeline, который будет выкачивать репозиторий с плейбукой и запускать её
-Перенести Declarative Pipeline в репозиторий в файл Jenkinsfile
-Перенастроить Job на использование Jenkinsfile из репозитория
-Создать Scripted Pipeline, наполнить его скриптом из pipeline
-Заменить credentialsId на свой собственный
-Проверить работоспособность, исправить ошибки, исправленный Pipeline вложить в репозитрий в файл ScriptedJenkinsfile
-Отправить ссылку на репозиторий в ответе
+1 Сделать Freestyle Job, который будет запускать ansible-playbook из форка репозитория
+пришлось установить гит на агента
+и ансибл apt-get install ansible -y
+
+ansible-galaxy install -p $WORKSPACE -r requirements.yml
+ansible-playbook ./site.yml -i ./inventory/prod.yml
+
+оп предоставленному плейбуку ява упала
+
+Started by user admin
+Running as SYSTEM
+Building remotely on jenkins_agent (ansible_docker) in workspace /home/jenkins/agent/workspace/Freestyle_ansible
+The recommended git tool is: NONE
+using credential 6d0a82bd-b2e4-4bf8-8a7c-7a4c5cf1291e
+ > git rev-parse --resolve-git-dir /home/jenkins/agent/workspace/Freestyle_ansible/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/daniiche/example-playbook.git # timeout=10
+Fetching upstream changes from https://github.com/daniiche/example-playbook.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.30.2'
+using GIT_ASKPASS to set credentials GitHub
+ > git fetch --tags --force --progress -- https://github.com/daniiche/example-playbook.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/master^{commit} # timeout=10
+Checking out Revision 7c0b99e0464c8c4cf2ac3e9d802379edfe06df00 (refs/remotes/origin/master)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 7c0b99e0464c8c4cf2ac3e9d802379edfe06df00 # timeout=10
+Commit message: "Update secret"
+ > git rev-list --no-walk 7c0b99e0464c8c4cf2ac3e9d802379edfe06df00 # timeout=10
+[Freestyle_ansible] $ /bin/sh -xe /tmp/jenkins11172031793477929436.sh
++ ansible-galaxy install -p /home/jenkins/agent/workspace/Freestyle_ansible -r requirements.yml
+Starting galaxy role install process
+[WARNING]: - java was NOT installed successfully: - command /usr/bin/git clone
+git@github.com:netology-code/mnt-homeworks-ansible.git java failed in directory
+/home/jenkins/.ansible/tmp/ansible-local-49188zu0mm1m/tmppybf_cov (rc=128) -
+Cloning into 'java'... Host key verification failed.  fatal: Could not read
+from remote repository.  Please make sure you have the correct access rights
+and the repository exists.
+ERROR! - you can use --ignore-errors to skip failed roles and finish processing the list.
+Build step 'Execute shell' marked build as failure
+Finished: FAILURE
+
+2 Сделать Declarative Pipeline, который будет выкачивать репозиторий с плейбукой и запускать её
+
+3 Перенести Declarative Pipeline в репозиторий в файл Jenkinsfile
+4 Перенастроить Job на использование Jenkinsfile из репозитория
+5 Создать Scripted Pipeline, наполнить его скриптом из pipeline
+6 Заменить credentialsId на свой собственный
+7 Проверить работоспособность, исправить ошибки, исправленный Pipeline вложить в репозитрий в файл ScriptedJenkinsfile
+8 Отправить ссылку на репозиторий в ответе
 
 ## Выполнение
