@@ -14,6 +14,7 @@
 ## Выполнение
 1 
 # docker-compose.yaml
+```
 version: '3.8'
 services:
  jenkins:
@@ -27,6 +28,7 @@ services:
   volumes:
    - /home/root/jenkins-docker-compose/jenkins_configuration:/var/jenkins_home
    - /var/run/docker.sock:/var/run/docker.sock
+```
 
 2
 открылся на порте 8080
@@ -43,6 +45,8 @@ password
 приведенный докерхаб не работает, завожу свой
 создаю ключ rsa, добавляю в дженкинс
 добавляю агента в докер компоуз, добавляю ноду через интерфейс
+
+```
 # docker-compose.yaml
 version: '3.8'
 services:
@@ -66,6 +70,7 @@ services:
    - 22
   environment:
    - JENKINS_AGENT_SSH_PUBKEY=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDIX3AXUI1vZlrWWnP/fDkr5/TWf118gF5cnXCoOqS0DQvOm9v0nUX86qGPjpfG/q3MQlN3MywRBgrY6Ay1gtLhQMKEIM1yavuIOEBLoJe+lp4HNM1UmGBLe04AQAUg8HMTptuM9Lf2GMDZHIxGlFLbiGCCyqYNu1adD6N6sOiLiQd3IGKAu+YUW1HwjnX7o2hTVUAz5exOT7PUG1nK8pnbp/e0YSF9cBDKaNHITCnk+A+z64aEWzgQ/vqvvXtsQNGiZrKLHA8r2GKLkFamRY1DqB9f+2Ab8tuW6g+988yElzdNLo5/wZnml7Hh+E3UgvTq7r2SW9vciGjNH6jFGJQKY8cEljMLBiCj3a37J2mxdsglX023B9aMvb7lFKitemlAqZ9hWp8XRjNNPGwZhK5ptkFN5hFBDmrKshIPvG/kY1JyHKmXtOuBc+nx5ffP1igH9yNoAoYQAHacyfgtFdryIrPGKClD86ljVAfVcaKQ/6bkrgSkpBM3cXrWtgiI2Rk= root@80-78-241-188.cloudvps.regruhosting.ru
+```
 
 Evacuated stdout
 Agent successfully connected and online
@@ -82,11 +87,14 @@ https://github.com/daniiche/example-playbook
 пришлось установить гит на агента
 и ансибл apt-get install ansible -y
 
+```
 ansible-galaxy install -p $WORKSPACE -r requirements.yml
 ansible-playbook ./site.yml -i ./inventory/prod.yml
+```
 
 оп предоставленному плейбуку ява упала
 
+```
 Started by user admin
 Running as SYSTEM
 Building remotely on jenkins_agent (ansible_docker) in workspace /home/jenkins/agent/workspace/Freestyle_ansible
@@ -118,10 +126,12 @@ and the repository exists.
 ERROR! - you can use --ignore-errors to skip failed roles and finish processing the list.
 Build step 'Execute shell' marked build as failure
 Finished: FAILURE
+```
 
 2 Сделать Declarative Pipeline, который будет выкачивать репозиторий с плейбукой и запускать её
 Declarative Pipeline
 
+```
 pipeline {
     agent any
     stages {
@@ -138,6 +148,7 @@ pipeline {
         }
     }
 }
+```
 
 
 3 Перенести Declarative Pipeline в репозиторий в файл Jenkinsfile
@@ -148,6 +159,7 @@ pipeline {
 pipeline from script SCM
 
 5 Создать Scripted Pipeline, наполнить его скриптом из pipeline
+```
 node("ansible_docker"){
     stage("Git checkout"){
         git credentialsId: '6d0a82bd-b2e4-4bf8-8a7c-7a4c5cf1291e', url: 'https://github.com/daniiche/example-playbook.git'
@@ -165,11 +177,13 @@ node("ansible_docker"){
         
     }
 }
+```
 
 6 Заменить credentialsId на свой собственный
 
 
 7 Проверить работоспособность, исправить ошибки, исправленный Pipeline вложить в репозитрий в файл ScriptedJenkinsfile
+```
 node("ansible_docker"){
     stage("Git checkout"){
         git credentialsId: '6d0a82bd-b2e4-4bf8-8a7c-7a4c5cf1291e', url: 'https://github.com/daniiche/example-playbook.git'
@@ -188,6 +202,8 @@ node("ansible_docker"){
         
     }
 }
+```
 SUCCESS
+
 8 Отправить ссылку на репозиторий в ответе
 https://github.com/daniiche/example-playbook
